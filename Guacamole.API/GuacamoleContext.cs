@@ -24,7 +24,8 @@ namespace Guacamole.API
         public virtual DbSet<MediaType> MediaTypes { get; set; } = null!;
         public virtual DbSet<Playlist> Playlists { get; set; } = null!;
         public virtual DbSet<Track> Tracks { get; set; } = null!;
-
+        
+        /*
         #warning this should be replaced in the future with dependency injection
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -33,6 +34,7 @@ namespace Guacamole.API
                 optionsBuilder.UseSqlite("Data Source=./db/chinook.db");
             }
         }
+        */
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

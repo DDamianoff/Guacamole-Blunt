@@ -1,22 +1,39 @@
 using Guacamole.API;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var provider = builder.Configuration.GetValue<string>("DbProvider");
+
+builder.Services.AddDbContext<GuacamoleContext>(
+    c =>
+    {
+        #warning use Strategy pattern instead.
+        switch (provider.ToLower())
+        {
+            case "sqlite":
+                c.UseSqlite(builder.Configuration.GetConnectionString("SQLITE"));
+                break;
+            case "memory":
+                c.UseInMemoryDatabase("Guacamole");
+                break;
+        }
+    });
+
+
+
+
 var app = builder.Build();
 
 
-app.MapGet("/artists", () =>
-{
-    using var db = new GuacamoleContext();
-    return db.Artists.ToList();
-});
+app.MapGet("/",  ([FromServices] GuacamoleContext dbContext) => 
+    dbContext.Database.EnsureCreated() 
+        ? Results.Ok($"ta bien {dbContext.Database.ProviderName}") 
+        : Results.Ok($"creada: {dbContext.Database.ProviderName}"));
 
-app.MapGet("/albums", () =>
-{
-    using var db = new GuacamoleContext();
-    return (from album in db.Albums
-                orderby album.Artist
-                select album.Title
-            ).ToList().Take(5);
-});
+app.MapGet("/memory",  ([FromServices] GuacamoleContext dbContext) => 
+    dbContext.Database.IsInMemory());
 
 app.Run();
