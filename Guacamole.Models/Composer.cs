@@ -8,7 +8,6 @@ namespace Guacamole.Models;
 public class Composer
 {
     // TODO: AutoIncrement using FluentAPI.
-    [Key]
     public string ComposerSigature 
     { get; set; }
     

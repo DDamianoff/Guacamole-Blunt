@@ -8,7 +8,6 @@ namespace Guacamole.Models;
 /// </summary>
 public class TimePeriod
 {
-    [Key]
     public int TimePeriodId 
     { get; set; }
     
