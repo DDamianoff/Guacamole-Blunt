@@ -9,7 +9,7 @@ public class Composer
 {
     // TODO: AutoIncrement using FluentAPI.
     [Key]
-    public int ComposerId 
+    public string ComposerSigature 
     { get; set; }
     
     [MaxLength(128)]
