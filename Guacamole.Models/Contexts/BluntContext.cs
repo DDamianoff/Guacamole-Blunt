@@ -16,6 +16,8 @@ public class BluntContext : DbContext
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        #region Primary keys
+
         modelBuilder.Entity<Composer>()
             .HasKey(c => c.ComposerSigature);
 
@@ -34,5 +36,14 @@ public class BluntContext : DbContext
         modelBuilder.Entity<TimePeriod>()
             .Property(t => t.TimePeriodId)
             .ValueGeneratedOnAdd();
+
+        #endregion
+
+        #region Foreign Keys
+
+        
+
+
+        #endregion
     }
 }
