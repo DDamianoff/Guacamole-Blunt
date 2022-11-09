@@ -37,8 +37,8 @@ public class Idea
         get; 
         set; 
     } = false;
-
-    public Category? Category
+    public int CategoryId { get; set; }
+    public virtual Category? Category
     {
         get;
         set;

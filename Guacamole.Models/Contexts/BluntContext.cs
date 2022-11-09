@@ -24,5 +24,23 @@ public class BluntContext : DbContext
         model.Entity<Idea>()
             .Property(i => i.Id)
             .ValueGeneratedOnAdd();
+
+        model.Entity<Category>()
+            .HasData(new Category()
+                {
+                    Id = 1,
+                    Name = "Default",
+                    DateCreated = DateOnly.FromDateTime(DateTime.Today)
+                });
+        
+        model.Entity<Idea>()
+            .HasData(new Idea()
+                {
+                    Id = 1,
+                    Content = "My first idea!",
+                    DateCreated = DateOnly.FromDateTime(DateTime.Today),
+                    DateModified = DateOnly.FromDateTime(DateTime.Today),
+                    CategoryId = 1
+                });
     }
 }
