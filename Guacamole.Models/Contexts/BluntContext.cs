@@ -11,17 +11,17 @@ public class BluntContext : DbContext
         : base(options) 
     { }
     
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating(ModelBuilder model)
     {
-        modelBuilder.Entity<Category>()
+        model.Entity<Category>()
             .HasKey(c => c.Id);
-        modelBuilder.Entity<Idea>()
+        model.Entity<Idea>()
             .HasKey(i => i.Id);
         
-        modelBuilder.Entity<Category>()
+        model.Entity<Category>()
             .Property(c => c.Id)
             .ValueGeneratedOnAdd();
-        modelBuilder.Entity<Idea>()
+        model.Entity<Idea>()
             .Property(i => i.Id)
             .ValueGeneratedOnAdd();
     }
