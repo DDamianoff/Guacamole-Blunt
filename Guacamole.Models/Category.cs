@@ -1,4 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 
@@ -22,7 +24,8 @@ public class Category
         get;
         set;
     } = null!;
-
+    
+    [JsonIgnore]
     public virtual ICollection<Idea> Ideas
     {
         get;

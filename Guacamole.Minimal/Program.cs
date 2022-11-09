@@ -20,4 +20,9 @@ app.MapGet("/", ([FromServices] BluntContext db) =>
         : "Working with an exiting db");
 });
 
+app.MapGet("/random", ([FromServices] BluntContext db) => 
+    db.Ideas
+        .Include(i => i.Category)
+        .First());
+
 app.Run();
