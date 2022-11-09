@@ -6,8 +6,6 @@ namespace Guacamole.Models;
 
 public class Category
 {
-    // TODO: move to FluentAPI
-    [Key]
     public int Id 
     { get; set; }
     
