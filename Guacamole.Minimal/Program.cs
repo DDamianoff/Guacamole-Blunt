@@ -14,7 +14,6 @@ var app = builder.Build();
 app.MapGet("/", ([FromServices] BluntContext db) =>
 {
     var result = db.Database.EnsureCreated();
-
     return "Hello world!" + "\n\n" + (result
         ? "Db recently created"
         : "Working with an exiting db");
