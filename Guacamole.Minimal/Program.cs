@@ -33,10 +33,9 @@ app.MapGet("/categories/{category}/", (string category, int? limit, [FromService
     return BluntController.GetByCategory((int)limit, category, db);
 });
 
-app.MapDelete("/ideas/{id:int}", (int id, [FromServices] BluntContext db) => 
-    BluntController.DeleteIdea(id, db) 
-        ? Results.Ok(new {Id = id})
-        : Results.NotFound());
+app.MapDelete("/ideas/{id:int}", (int id, [FromServices] BluntContext db) =>
+    BluntController.DeleteIdea(id, db));
+        
 
 app.MapPut("/ideas/{id:int}", (int id, Idea ideaInput, [FromServices] BluntContext db) => 
     BluntController.UpdateIdea(id, ideaInput, db));

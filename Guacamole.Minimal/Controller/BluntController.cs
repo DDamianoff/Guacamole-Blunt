@@ -6,12 +6,13 @@ namespace Guacamole.Minimal.Controller;
 
 public static class BluntController
 {
-    public static string HelloWorld ([FromServices] BluntContext db)
+    public static IResult HelloWorld ([FromServices] BluntContext db)
     {
         var result = db.Database.EnsureCreated();
-        return "Hello world!" + "\n\n" + (result
+
+        return Results.Ok("Hello world!" + "\n\n" + (result
             ? "Db recently created"
-            : "Working with an exiting db");
+            : "Working with an exiting db"));
     }
     
     
@@ -35,17 +36,17 @@ public static class BluntController
                 .ToList());
     }
 
-    public static bool DeleteIdea (int id, [FromServices] BluntContext db)
+    public static IResult DeleteIdea (int id, [FromServices] BluntContext db)
     {
         var result = db.Ideas.Find(id);
         
         if (result is null)
-            return false;
+            return Results.NotFound();
 
         db.Ideas.Remove(result);
         db.SaveChanges();
         
-        return true;
+        return Results.Ok(result);
     }
     public static IResult UpdateIdea (int id, Idea input, [FromServices] BluntContext db)
     {
