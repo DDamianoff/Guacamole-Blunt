@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Guacamole.Models;
 
@@ -38,6 +39,7 @@ public class Idea
         set; 
     } = false;
     public int CategoryId { get; set; }
+    [JsonIgnore]
     public virtual Category? Category
     {
         get;
