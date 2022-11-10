@@ -10,7 +10,7 @@ public static class BluntController
     {
         var result = db.Database.EnsureCreated();
 
-        return Results.Ok("Hello world!" + "\n\n" + (result
+        return Results.Ok("Hello world! " + (result
             ? "Db recently created"
             : "Working with an exiting db"));
     }
