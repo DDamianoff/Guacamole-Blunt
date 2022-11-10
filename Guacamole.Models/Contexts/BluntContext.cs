@@ -2,14 +2,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Guacamole.Models.Contexts;
 
-public class BluntContext : DbContext
+public sealed class BluntContext : DbContext
 {
     public DbSet<Category> Categories { get; set; }
     
     public DbSet<Idea> Ideas { get; set; }
-    public BluntContext (DbContextOptions<BluntContext> options)
-        : base(options) 
-    { }
+
+    public BluntContext(DbContextOptions<BluntContext> options)
+        : base(options)
+    {
+        // Disable lazy loading:
+        // ChangeTracker.LazyLoadingEnabled = false;
+    }
     
     protected override void OnModelCreating(ModelBuilder model)
     {
