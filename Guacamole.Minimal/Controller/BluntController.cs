@@ -17,14 +17,14 @@ public static class BluntController
     }
     
     
-    public static async Task<IResult> GetIdeas (int limit, [FromServices]  BluntContext db) => 
+    public static async Task<IResult> GetIdeas (int? limit, [FromServices]  BluntContext db) => 
         await Task.Run(() => 
             Results.Ok(db.Ideas
-                .Take(limit)
+                .Take(limit.EnsureValue())
                 .ToList())
         );
 
-    public static async Task<IResult> GetByCategory(int limit, string category, [FromServices] BluntContext db)
+    public static async Task<IResult> GetByCategory(int? limit, string category, [FromServices] BluntContext db)
     {
         var result = await db.Categories
             // ReSharper disable once SpecifyStringComparison
@@ -35,7 +35,7 @@ public static class BluntController
 
         return Results.Ok(await db.Ideas
                 .Where(i => i.CategoryId == result.Id)
-                .Take(limit)
+                .Take(limit.EnsureValue())
                 .ToListAsync());
     }
     
@@ -56,8 +56,7 @@ public static class BluntController
     
     public static async Task<IResult> GetCategory(int? limit, [FromServices] BluntContext db)
     {
-        limit ??= 10;
-        return Results.Ok(await db.Categories.Take((int)limit)
+        return Results.Ok(await db.Categories.Take(limit.EnsureValue())
             .ToListAsync());
     }
 
@@ -124,4 +123,6 @@ public static class BluntController
         
         return Results.Created("/ideas/{id:int}", idea);
     }
+    
+    private static int EnsureValue(this int? v) => v ?? 10;
 }
