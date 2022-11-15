@@ -23,6 +23,15 @@ public static class BluntController
                 .Take(limit.EnsureValue())
                 .ToListAsync());
 
+    public static async Task<IResult> GetIdeaById (int id, [FromServices] BluntContext db)
+    {
+        var idea = await db.Ideas.FindAsync(id);
+
+        return idea is null 
+            ? Results.NotFound() 
+            : Results.Ok(idea);
+    }
+    
     public static async Task<IResult> GetByCategory(int? limit, string category, [FromServices] BluntContext db)
     {
         var result = await db.Categories

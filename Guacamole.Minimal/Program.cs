@@ -34,6 +34,8 @@ app.MapGet("/", BluntController.HelloWorld);
 
 app.MapGet("/ideas/", BluntController.GetIdeas);
 
+app.MapGet("/ideas/{id:int}", BluntController.GetIdeaById);
+
 app.MapGet("/categories/", BluntController.GetCategory);
 
 app.MapPost("/categories/", BluntController.AddCategory);
