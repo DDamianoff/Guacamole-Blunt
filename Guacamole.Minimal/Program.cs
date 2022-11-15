@@ -40,6 +40,10 @@ app.MapGet("/ideas/", async (int? limit, [FromServices] BluntContext db) =>
     return await BluntController.GetIdeas((int)limit, db);
 });
 
+app.MapGet("/categories/", BluntController.GetCategory);
+
+app.MapPost("/categories/", BluntController.AddCategory);
+
 app.MapGet("/categories/{category}/", async (string category, int? limit, [FromServices] BluntContext db) =>
 {
     limit ??= 10;

@@ -17,18 +17,18 @@ public class Category
     { 
         get; 
         set; 
-    } = null!;
+    }
 
-    public DateOnly? DateCreated
+    public DateOnly DateCreated
     {
         get;
         set;
-    } = null!;
+    }
     
     [JsonIgnore]
     public virtual ICollection<Idea> Ideas
     {
         get;
         set;
-    } = null!;
+    }
 }

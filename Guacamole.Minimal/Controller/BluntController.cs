@@ -38,6 +38,28 @@ public static class BluntController
                 .Take(limit)
                 .ToListAsync());
     }
+    
+    public static async Task<IResult> AddCategory(Category input, [FromServices] BluntContext db)
+    {
+        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+        if (input.Name == null) return Results.UnprocessableEntity("Name must be provided");
+
+        Category category = new() { Name = input.Name, DateCreated = DateOnly.FromDateTime(DateTime.Now) };
+
+        await db.AddAsync(category);
+        await db.SaveChangesAsync();
+
+        category = await db.Categories.FirstAsync(c => c.Name == input.Name);
+
+        return Results.Created("/categories/{category}/", category);
+    }
+    
+    public static async Task<IResult> GetCategory(int? limit, [FromServices] BluntContext db)
+    {
+        limit ??= 10;
+        return Results.Ok(await db.Categories.Take((int)limit)
+            .ToListAsync());
+    }
 
     public static async Task<IResult> DeleteIdea (int id, [FromServices] BluntContext db)
     {
