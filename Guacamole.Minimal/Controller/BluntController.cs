@@ -30,7 +30,7 @@ public static class BluntController
             .FirstOrDefaultAsync(c => category.ToLower() == c.Name.ToLower());
         
         if (result is null) 
-            return await Task.Run(() => Results.NotFound());
+            return Results.NotFound();
 
         return Results.Ok(await db.Ideas
                 .Where(i => i.CategoryId == result.Id)
