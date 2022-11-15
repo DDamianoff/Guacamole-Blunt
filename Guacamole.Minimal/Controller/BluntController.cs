@@ -18,11 +18,9 @@ public static class BluntController
     
     
     public static async Task<IResult> GetIdeas (int? limit, [FromServices]  BluntContext db) => 
-        await Task.Run(() => 
-            Results.Ok(db.Ideas
+        Results.Ok(await db.Ideas
                 .Take(limit.EnsureValue())
-                .ToList())
-        );
+                .ToListAsync());
 
     public static async Task<IResult> GetByCategory(int? limit, string category, [FromServices] BluntContext db)
     {
@@ -56,7 +54,8 @@ public static class BluntController
     
     public static async Task<IResult> GetCategory(int? limit, [FromServices] BluntContext db)
     {
-        return Results.Ok(await db.Categories.Take(limit.EnsureValue())
+        return Results.Ok(await db.Categories
+            .Take(limit.EnsureValue())
             .ToListAsync());
     }
 
