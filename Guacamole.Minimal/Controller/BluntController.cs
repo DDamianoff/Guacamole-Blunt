@@ -1,6 +1,7 @@
 using Guacamole.Models;
 using Guacamole.Models.Contexts;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Guacamole.Minimal.Controller;
 

@@ -9,7 +9,20 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<BluntContext>(options =>
 {
-    options.UseSqlite("Data Source=./db/Blunt.db");
+    var settings = builder.Configuration;
+    
+    switch (settings.GetValue<string>("DataBaseProvider").ToLower())
+    {
+        case "sqlite":
+            options.UseSqlite(settings.GetConnectionString("SQLite"));
+            break;
+        case "inmemory":
+            options.UseInMemoryDatabase(settings.GetConnectionString("InMemory") ?? "db");
+            break;
+        default:
+            options.UseInMemoryDatabase( "db");
+            break;
+    }
 });
 
 builder.Services.AddMvc().AddJsonOptions(o =>
