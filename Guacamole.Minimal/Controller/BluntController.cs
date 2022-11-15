@@ -7,9 +7,9 @@ namespace Guacamole.Minimal.Controller;
 
 public static class BluntController
 {
-    public static IResult HelloWorld ([FromServices] BluntContext db)
+    public static async Task<IResult> HelloWorld ([FromServices] BluntContext db)
     {
-        var result = db.Database.EnsureCreated();
+        var result = await db.Database.EnsureCreatedAsync();
 
         return Results.Ok("Hello world! " + (result
             ? "Db recently created"
@@ -17,41 +17,43 @@ public static class BluntController
     }
     
     
-    public static IResult GetIdeas (int limit, [FromServices]  BluntContext db) => 
-        Results.Ok(db.Ideas
-            .Take(limit)
-            .ToList());
+    public static async Task<IResult> GetIdeas (int limit, [FromServices]  BluntContext db) => 
+        await Task.Run(() => 
+            Results.Ok(db.Ideas
+                .Take(limit)
+                .ToList())
+        );
 
-    public static IResult GetByCategory(int limit, string category, [FromServices] BluntContext db)
+    public static async Task<IResult> GetByCategory(int limit, string category, [FromServices] BluntContext db)
     {
-        var result = db.Categories
+        var result = await db.Categories
             // ReSharper disable once SpecifyStringComparison
-            .FirstOrDefault(c => category.ToLower() == c.Name.ToLower());
+            .FirstOrDefaultAsync(c => category.ToLower() == c.Name.ToLower());
         
         if (result is null) 
-            return Results.NotFound();
+            return await Task.Run(() => Results.NotFound());
 
-        return Results.Ok(db.Ideas
+        return Results.Ok(await db.Ideas
                 .Where(i => i.CategoryId == result.Id)
                 .Take(limit)
-                .ToList());
+                .ToListAsync());
     }
 
-    public static IResult DeleteIdea (int id, [FromServices] BluntContext db)
+    public static async Task<IResult> DeleteIdea (int id, [FromServices] BluntContext db)
     {
-        var result = db.Ideas.Find(id);
+        var result = await db.Ideas.FindAsync(id);
         
         if (result is null)
             return Results.NotFound();
 
         db.Ideas.Remove(result);
-        db.SaveChanges();
+        await db.SaveChangesAsync();
         
         return Results.Ok(result);
     }
-    public static IResult UpdateIdea (int id, Idea input, [FromServices] BluntContext db)
+    public static async Task<IResult> UpdateIdea (int id, Idea input, [FromServices] BluntContext db)
     {
-        var idea = db.Ideas.Find(id);
+        var idea = await db.Ideas.FindAsync(id);
 
         if (idea is null)
             return Results.NotFound();
@@ -59,7 +61,7 @@ public static class BluntController
         
         if (idea.CategoryId != input.CategoryId)
         {
-            var category = db.Categories.Find(input.CategoryId);
+            var category = await db.Categories.FindAsync(input.CategoryId);
 
             if (category is null)
                 return Results.BadRequest("Specified category not found");
@@ -74,16 +76,16 @@ public static class BluntController
         idea.DateCreated = input.DateCreated;
         idea.DateModified = DateOnly.FromDateTime(DateTime.Today);
         
-        db.SaveChanges();
+        await db.SaveChangesAsync();
 
         return Results.Ok(idea);
     }
 
-    public static IResult AddIdea(Idea input, [FromServices] BluntContext db)
+    public static async Task<IResult> AddIdea(Idea input, [FromServices] BluntContext db)
     {
         db.ChangeTracker.LazyLoadingEnabled = false;
         
-        if (db.Categories.Find(input.CategoryId) is null) 
+        if (await db.Categories.FindAsync(input.CategoryId) is null) 
             return Results.NotFound("Category not found");
         
         Idea idea = new ()
@@ -94,9 +96,9 @@ public static class BluntController
             CategoryId = input.CategoryId
         };
         
-        db.Ideas.Add(idea);
+        await db.Ideas.AddAsync(idea);
 
-        db.SaveChanges();
+        await db.SaveChangesAsync();
         
         return Results.Created("/ideas/{id:int}", idea);
     }

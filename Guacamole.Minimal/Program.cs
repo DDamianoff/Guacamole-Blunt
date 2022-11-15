@@ -34,26 +34,26 @@ var app = builder.Build();
 
 app.MapGet("/", BluntController.HelloWorld);
 
-app.MapGet("/ideas/", (int? limit, [FromServices] BluntContext db) =>
+app.MapGet("/ideas/", async (int? limit, [FromServices] BluntContext db) =>
 {
     limit ??= 10;
-    return BluntController.GetIdeas((int)limit, db);
+    return await BluntController.GetIdeas((int)limit, db);
 });
 
-app.MapGet("/categories/{category}/", (string category, int? limit, [FromServices] BluntContext db) =>
+app.MapGet("/categories/{category}/", async (string category, int? limit, [FromServices] BluntContext db) =>
 {
     limit ??= 10;
-    return BluntController.GetByCategory((int)limit, category, db);
+    return await BluntController.GetByCategory((int)limit, category, db);
 });
 
-app.MapDelete("/ideas/{id:int}", (int id, [FromServices] BluntContext db) =>
-    BluntController.DeleteIdea(id, db));
+app.MapDelete("/ideas/{id:int}", async (int id, [FromServices] BluntContext db) =>
+    await BluntController.DeleteIdea(id, db));
         
 
-app.MapPut("/ideas/{id:int}", (int id, Idea ideaInput, [FromServices] BluntContext db) => 
-    BluntController.UpdateIdea(id, ideaInput, db));
+app.MapPut("/ideas/{id:int}", async (int id, Idea ideaInput, [FromServices] BluntContext db) => 
+    await BluntController.UpdateIdea(id, ideaInput, db));
 
-app.MapPost("/ideas/", (Idea input, [FromServices] BluntContext db) => 
-    BluntController.AddIdea(input,db));
+app.MapPost("/ideas/", async (Idea input, [FromServices] BluntContext db) => 
+    await BluntController.AddIdea(input,db));
 
 app.Run();
