@@ -20,4 +20,8 @@
       <ProjectReference Include="..\Guacamole.Models\Guacamole.Models.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="db" />
+    </ItemGroup>
+
 </Project>
