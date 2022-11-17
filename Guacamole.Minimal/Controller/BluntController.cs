@@ -133,5 +133,61 @@ public static class BluntController
         return Results.Created("/ideas/{id:int}", idea);
     }
     
+    public static async Task<IResult> DeleteCategoryByName(string category, [FromServices] BluntContext db)
+    {
+        var result = await db.Categories.FirstOrDefaultAsync(c => c.Name.ToLower() == category.ToLower());
+
+        if (result is null) return Results.NotFound();
+
+        db.Categories.Remove(result);
+
+        await db.SaveChangesAsync();
+
+        return Results.NoContent();
+    }
+
+    public static async Task<IResult> DeleteCategoryById(int id, [FromServices] BluntContext db)
+    {
+        var result = await db.Categories.FindAsync(id);
+
+        if (result is null) return Results.NotFound();
+
+        db.Categories.Remove(result);
+
+        await db.SaveChangesAsync();
+
+        return Results.NoContent();
+    }
+
+    public static async Task<IResult> DetailedDeleteCategoryByName(string category, [FromServices] BluntContext db)
+    {
+        var result = await db.Categories.FirstOrDefaultAsync(c => c.Name.ToLower() == category.ToLower());
+
+        if (result is null) return Results.NotFound();
+
+        var outInfo = new { CategoryName = result.Name, AffectedIdeas = from ideas in db.Ideas where ideas.Id == result.Id select ideas.Id, };
+
+        db.Categories.Remove(result);
+
+        var affectedEntities = await db.SaveChangesAsync();
+
+        return Results.Ok(new { TotalAffectedEntities = affectedEntities, outInfo.CategoryName, outInfo.AffectedIdeas });
+    }
+
+    public static async Task<IResult> DetaileDeleteCategoryById(int id, [FromServices] BluntContext db)
+    {
+        var result = await db.Categories.FindAsync(id);
+
+        if (result is null) return Results.NotFound();
+
+        var outInfo = new { CategoryName = result.Name, AffectedIdeas = from ideas in db.Ideas where ideas.Id == result.Id select ideas.Id, };
+
+        db.Categories.Remove(result);
+
+        var affectedEntities = await db.SaveChangesAsync();
+
+        return Results.Ok(new { TotalAffectedEntities = affectedEntities, outInfo.CategoryName, outInfo.AffectedIdeas });
+    }
+    
     private static int EnsureValue(this int? v) => v ?? DefaultLimit;
 }

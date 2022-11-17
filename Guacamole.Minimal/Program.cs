@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using Guacamole.Models.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Guacamole.Minimal.Controller;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,5 +48,13 @@ app.MapGet("/categories/", BluntController.GetCategory);
 app.MapPost("/categories/", BluntController.AddCategory);
 
 app.MapGet("/categories/{category}/", BluntController.GetByCategory);
+
+app.MapDelete("/categories/{category}/",  BluntController.DeleteCategoryByName);
+
+app.MapDelete("/categories/{id:int}/",  BluntController.DeleteCategoryById);
+
+app.MapDelete("/categories/{category}/detailed/",  BluntController.DetailedDeleteCategoryByName);
+
+app.MapDelete("/categories/{id:int}/detailed/",  BluntController.DetaileDeleteCategoryById);
 
 app.Run();
