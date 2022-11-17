@@ -36,16 +36,16 @@ app.MapGet("/ideas/", BluntController.GetIdeas);
 
 app.MapGet("/ideas/{id:int}", BluntController.GetIdeaById);
 
+app.MapPut("/ideas/{id:int}", BluntController.UpdateIdea);
+
+app.MapPost("/ideas/", BluntController.AddIdea);
+
+app.MapDelete("/ideas/{id:int}", BluntController.DeleteIdea);
+
 app.MapGet("/categories/", BluntController.GetCategory);
 
 app.MapPost("/categories/", BluntController.AddCategory);
 
 app.MapGet("/categories/{category}/", BluntController.GetByCategory);
-
-app.MapDelete("/ideas/{id:int}", BluntController.DeleteIdea);
-
-app.MapPut("/ideas/{id:int}", BluntController.UpdateIdea);
-
-app.MapPost("/ideas/", BluntController.AddIdea);
 
 app.Run();
