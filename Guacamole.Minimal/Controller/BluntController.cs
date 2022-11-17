@@ -191,8 +191,13 @@ public static class BluntController
         return Results.Ok(new { TotalAffectedEntities = affectedEntities, outInfo.CategoryName, outInfo.AffectedIdeas });
     }
     
-    private static int EnsureValue(this int? v) => 
-        (v ?? DefaultLimit) > MaxLimit 
-            ? MaxLimit
-            : (int)v!;
+    private static int EnsureValue(this int? v)
+    {
+        var outValue = v ?? DefaultLimit;
+
+        if (outValue > MaxLimit)
+            outValue = MaxLimit;
+
+        return outValue;
+    }
 }
