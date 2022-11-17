@@ -34,7 +34,7 @@ public sealed class BluntContext : DbContext
                 {
                     Id = 1,
                     Name = "Default",
-                    DateCreated = DateOnly.FromDateTime(DateTime.Today)
+                    Created = DateTime.Now
                 });
         
         model.Entity<Idea>()
@@ -42,8 +42,8 @@ public sealed class BluntContext : DbContext
                 {
                     Id = 1,
                     Content = "My first idea!",
-                    DateCreated = DateOnly.FromDateTime(DateTime.Today),
-                    DateModified = DateOnly.FromDateTime(DateTime.Today),
+                    Created = DateTime.Now,
+                    Modified = DateTime.Now,
                     CategoryId = 1
                 });
     }

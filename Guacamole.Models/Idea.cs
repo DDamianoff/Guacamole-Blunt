@@ -14,13 +14,13 @@ public class Idea
         set;
     } = null!;
 
-    public DateOnly DateCreated
+    public DateTime Created
     {
         get;
         set;
     }
 
-    public DateOnly DateModified
+    public DateTime Modified
     {
         get;
         set;

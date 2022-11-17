@@ -52,7 +52,7 @@ public static class BluntController
         // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
         if (input.Name == null) return Results.UnprocessableEntity("Name must be provided");
 
-        Category category = new() { Name = input.Name, DateCreated = DateOnly.FromDateTime(DateTime.Now) };
+        Category category = new() { Name = input.Name, Created = DateTime.Now };
 
         await db.AddAsync(category);
         await db.SaveChangesAsync();
@@ -103,8 +103,8 @@ public static class BluntController
         idea.Archived = input.Archived;
         idea.Content = input.Content;
         idea.RecentlyViewed = input.RecentlyViewed;
-        idea.DateCreated = input.DateCreated;
-        idea.DateModified = DateOnly.FromDateTime(DateTime.Today);
+        idea.Created = input.Created;
+        idea.Modified = DateTime.Now;
         
         await db.SaveChangesAsync();
 
@@ -121,8 +121,8 @@ public static class BluntController
         Idea idea = new ()
         {
             Content = input.Content,
-            DateCreated = DateOnly.FromDateTime(DateTime.Today),
-            DateModified = DateOnly.FromDateTime(DateTime.Today),
+            Created = DateTime.Now,
+            Modified = DateTime.Now,
             CategoryId = input.CategoryId
         };
         

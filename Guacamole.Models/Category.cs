@@ -19,7 +19,7 @@ public class Category
         set; 
     }
 
-    public DateOnly DateCreated
+    public DateTime Created
     {
         get;
         set;
