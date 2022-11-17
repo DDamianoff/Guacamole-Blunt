@@ -30,6 +30,11 @@ public sealed class BluntContext : DbContext
             .ValueGeneratedOnAdd();
 
         model.Entity<Category>()
+            .HasMany(c => c.Ideas)
+            .WithOne(c => c.Category)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        model.Entity<Category>()
             .HasData(new Category()
                 {
                     Id = 1,
