@@ -2,7 +2,6 @@ using System.Text.Json.Serialization;
 using Guacamole.Models.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Guacamole.Minimal.Controller;
-using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
