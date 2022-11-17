@@ -176,7 +176,7 @@ public static class BluntController
         return Results.Ok(new { TotalAffectedEntities = affectedEntities, outInfo.CategoryName, outInfo.AffectedIdeas });
     }
 
-    public static async Task<IResult> DetaileDeleteCategoryById(int id, [FromServices] BluntContext db)
+    public static async Task<IResult> DetailedDeleteCategoryById(int id, [FromServices] BluntContext db)
     {
         var result = await db.Categories.FindAsync(id);
 

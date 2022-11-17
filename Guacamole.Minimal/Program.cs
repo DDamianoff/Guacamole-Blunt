@@ -55,6 +55,6 @@ app.MapDelete("/categories/{id:int}/",  BluntController.DeleteCategoryById);
 
 app.MapDelete("/categories/{category}/detailed/",  BluntController.DetailedDeleteCategoryByName);
 
-app.MapDelete("/categories/{id:int}/detailed/",  BluntController.DetaileDeleteCategoryById);
+app.MapDelete("/categories/{id:int}/detailed/",  BluntController.DetailedDeleteCategoryById);
 
 app.Run();
