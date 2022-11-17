@@ -8,6 +8,8 @@ namespace Guacamole.Minimal.Controller;
 public static class BluntController
 {
     private const int DefaultLimit = 10;
+
+    private const int MaxLimit = 150;
     public static async Task<IResult> HelloWorld ([FromServices] BluntContext db)
     {
         var result = await db.Database.EnsureCreatedAsync();
@@ -189,5 +191,8 @@ public static class BluntController
         return Results.Ok(new { TotalAffectedEntities = affectedEntities, outInfo.CategoryName, outInfo.AffectedIdeas });
     }
     
-    private static int EnsureValue(this int? v) => v ?? DefaultLimit;
+    private static int EnsureValue(this int? v) => 
+        (v ?? DefaultLimit) > MaxLimit 
+            ? MaxLimit
+            : (int)v!;
 }
