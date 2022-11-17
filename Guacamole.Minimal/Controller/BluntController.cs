@@ -167,13 +167,18 @@ public static class BluntController
 
         if (result is null) return Results.NotFound();
 
-        var outInfo = new { CategoryName = result.Name, AffectedIdeas = from ideas in db.Ideas where ideas.Id == result.Id select ideas.Id, };
+        var outInfo = new
+        {
+            CategoryName = result.Name, 
+            AffectedIdeas = (from ideas in db.Ideas 
+                where ideas.CategoryId == result.Id 
+                select ideas.Id).ToArray(),
+        };
 
         db.Categories.Remove(result);
+        await db.SaveChangesAsync();
 
-        var affectedEntities = await db.SaveChangesAsync();
-
-        return Results.Ok(new { TotalAffectedEntities = affectedEntities, outInfo.CategoryName, outInfo.AffectedIdeas });
+        return Results.Ok(outInfo);
     }
 
     public static async Task<IResult> DetailedDeleteCategoryById(int id, [FromServices] BluntContext db)
@@ -182,13 +187,19 @@ public static class BluntController
 
         if (result is null) return Results.NotFound();
 
-        var outInfo = new { CategoryName = result.Name, AffectedIdeas = from ideas in db.Ideas where ideas.Id == result.Id select ideas.Id, };
+        var outInfo = new
+        {
+            CategoryName = result.Name, 
+            AffectedIdeas = (from ideas in db.Ideas
+                where ideas.CategoryId == result.Id 
+                select ideas.Id).ToArray(),
+        };
 
         db.Categories.Remove(result);
 
-        var affectedEntities = await db.SaveChangesAsync();
+        await db.SaveChangesAsync();
 
-        return Results.Ok(new { TotalAffectedEntities = affectedEntities, outInfo.CategoryName, outInfo.AffectedIdeas });
+        return Results.Ok(outInfo);
     }
     
     private static int EnsureValue(this int? v)
