@@ -1,11 +1,10 @@
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
-// ReSharper disable ClassWithVirtualMembersNeverInherited.Global
-// ReSharper disable MemberCanBePrivate.Global
-// ReSharper disable UnusedAutoPropertyAccessor.Global
 
 namespace Guacamole.Models;
 
+[SuppressMessage("ReSharper", "ClassWithVirtualMembersNeverInherited.Global")]
 public class Category
 {
     public int Id 

@@ -1,8 +1,10 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 
 namespace Guacamole.Models;
 
+[SuppressMessage("ReSharper", "ClassWithVirtualMembersNeverInherited.Global")]
 public class Idea
 {
     public int Id 
@@ -40,7 +42,7 @@ public class Idea
     } = false;
     public int CategoryId { get; set; }
     [JsonIgnore]
-    public virtual Category? Category
+    public virtual Category Category
     {
         get;
         set;
