@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+// ReSharper disable UnusedAutoPropertyAccessor.Global
 
 namespace Guacamole.Models.Contexts;
 
@@ -14,6 +15,11 @@ public class BluntContextBase : DbContext
         // Disable lazy loading:
         // ChangeTracker.LazyLoadingEnabled = false;
     }
+    
+    protected BluntContextBase(DbContextOptions options)
+        : base(options) {
+    }
+
     
     protected override void OnModelCreating(ModelBuilder model)
     {
