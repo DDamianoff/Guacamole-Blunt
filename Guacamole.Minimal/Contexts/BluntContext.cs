@@ -5,7 +5,7 @@ namespace Guacamole.Minimal.Contexts;
 
 public sealed class BluntContext : BluntContextBase
 {
-    public BluntContext(DbContextOptions<BluntContextBase> options)
+    public BluntContext(DbContextOptions<BluntContext> options)
         : base(options)
     {
         // Disable lazy loading:
