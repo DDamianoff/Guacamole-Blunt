@@ -1,3 +1,4 @@
+using Guacamole.Minimal.Contexts;
 using Guacamole.Models;
 using Guacamole.Models.Contexts;
 using Microsoft.AspNetCore.Mvc;

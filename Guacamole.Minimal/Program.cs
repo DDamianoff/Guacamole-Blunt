@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Guacamole.Minimal.Contexts;
 using Guacamole.Models.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Guacamole.Minimal.Controller;
