@@ -5,7 +5,7 @@ using Guacamole.Models.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-
+// TODO: move migrations to a separate project
 #nullable disable
 
 namespace Guacamole.Minimal.Migrations
